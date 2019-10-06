@@ -1,0 +1,10 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/NinjaDB.dir/main.c.o"
+  "NinjaDB"
+  "NinjaDB.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang C)
+  include(CMakeFiles/NinjaDB.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
