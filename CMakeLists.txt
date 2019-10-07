@@ -3,4 +3,4 @@ project(NinjaDB C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(NinjaDB main.c)
+add_executable(NinjaDB main.c constants.c)

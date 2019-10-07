@@ -9,4 +9,10 @@
 /home/arun/CLionProjects/NinjaDB/main.c
 stdio.h
 -
+stdlib.h
+-
+malloc.h
+-
+string.h
+-
 

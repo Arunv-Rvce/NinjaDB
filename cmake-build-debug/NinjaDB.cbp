@@ -78,6 +78,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/arun/CLionProjects/NinjaDB/constants.c">
+			<Option target="NinjaDB"/>
+		</Unit>
 		<Unit filename="/home/arun/CLionProjects/NinjaDB/main.c">
 			<Option target="NinjaDB"/>
 		</Unit>
