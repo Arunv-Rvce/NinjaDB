@@ -1,1 +1,1 @@
-/usr/bin/cc -g   CMakeFiles/NinjaDB.dir/main.c.o  -o NinjaDB 
+/usr/bin/cc -g   CMakeFiles/NinjaDB.dir/main.c.o CMakeFiles/NinjaDB.dir/constants.c.o  -o NinjaDB 
