@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/home/arun/CLionProjects/NinjaDB/constants.c
+stdlib.h
+-
+stdint.h
+-
+
 /home/arun/CLionProjects/NinjaDB/main.c
 stdio.h
 -
@@ -15,4 +21,6 @@ malloc.h
 -
 string.h
 -
+constants.c
+/home/arun/CLionProjects/NinjaDB/constants.c
 
