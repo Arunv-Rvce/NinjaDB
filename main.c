@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <string.h>
+#include <bits/fcntl-linux.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include "constants.c"
 
 InputBuffer* createInputBuffer() {
@@ -39,25 +42,35 @@ void deserializeRow(void* source, Row* destination) {
 
 void* rowSlot(Table* table, uint32_t rowNum) {
     uint32_t pageNum = rowNum / ROWS_PER_PAGE;
-    void* page = table -> pages[pageNum];
-
-    if (page == NULL) {
-        // Allocate memory only when we try to access page
-        page = table -> pages[pageNum] = malloc(PAGE_SIZE);
-    }
+    void* page = getPage(table -> pager, pageNum);
 
     uint32_t rowOffset = rowNum % ROWS_PER_PAGE;
     uint32_t byteOffset = rowOffset * ROW_SIZE;
     return page + byteOffset;
 }
 
-Table* getNewTable() {
-    Table* table = (Table*) malloc(sizeof(Table));
-    table ->numRows = 0;
-    for (uint32_t i = 0; i < TABLE_MAX_PAGES; i++) {
-        table -> pages[i] = NULL;
+Pager* pagerOpen(const char* filename) {
+    int fd = open(filename,  O_RDWR | O_CREAT, S_IWUSR | S_IRUSR);
+    if (fd == -1) {
+        printf("Unable to open file\n");
+        exit(EXIT_FAILURE);
     }
-    return table;
+
+    off_t fileLength = lseek(fd, 0, SEEK_END);
+    Pager* pager = malloc(sizeof(Pager));
+    pager -> fileDescriptor = fd;
+    pager -> fileLength = fileLength;
+
+    for (uint32_t i = 0; i < TABLE_MAX_PAGES; i++) {
+        pager->pages[i] = NULL;
+    }
+
+    return pager;
+}
+
+Table* openDB(const char* filename) {
+    Pager* pager = pagerOpen(filename);
+    uint32_t num_rows = pager -> fileLength / ROW_SIZE;
 }
 
 void freeTable(Table* table) {
@@ -89,13 +102,40 @@ MetaCommandResult createMetaCommand(InputBuffer* inputBuffer, Table* table) {
     }
 }
 
+PrepareResult prepare_insert(InputBuffer* inputBuffer, Statement* statement) {
+    statement->type = STATEMENT_INSERT;
+
+    char* keyword = strtok(inputBuffer->buffer, " ");
+    char* idStr = strtok(NULL, " ");
+    char* username = strtok(NULL, " ");
+    char* email = strtok(NULL, " ");
+
+    if (idStr == NULL || username == NULL || email == NULL) {
+        return PREPARE_SYNTAX_ERROR;
+    }
+
+    int id = atoi(idStr);
+    if (id < 0) {
+        return PREPARE_NEGATIVE_ID;
+    }
+
+    if (strlen(username) > COLUMN_USERNAME_SIZE) {
+        return PREPARE_STRING_TOO_LONG;
+    }
+
+    if (strlen(username) > COLUMN_USERNAME_SIZE) {
+        return PREPARE_STRING_TOO_LONG;
+    }
+
+    statement->rowToInsert.id = id;
+    strcpy(statement->rowToInsert.username, username);
+    strcpy(statement->rowToInsert.email, email);
+    return PREPARE_SUCCESS;
+}
+
 PrepareResult prepareStatement(InputBuffer* inputBuffer, Statement* statement) {
     if (strncmp(inputBuffer -> buffer, "insert", 6) == 0) {
-        statement -> type = STATEMENT_INSERT;
-        int argsAssigned = sscanf(inputBuffer -> buffer, "insert %d %s %s", &(statement->  rowToInsert.id), statement -> rowToInsert.username, statement -> rowToInsert.email);
-        if (argsAssigned < 3)
-            return PREPARE_SYNTAX_ERROR;
-        return PREPARE_SUCCESS;
+        return prepare_insert(inputBuffer, statement);
     }
     if (strncmp(inputBuffer -> buffer, "select", 6) == 0) {
         statement -> type = STATEMENT_SELECT;
@@ -155,6 +195,12 @@ int main(int argc, char* argv[]) {
         switch (prepareStatement(inputBuffer, &statement)) {
             case PREPARE_SUCCESS:
                 break;
+            case PREPARE_NEGATIVE_ID:
+                printf("ID must be positive.\n");
+                continue;
+            case PREPARE_STRING_TOO_LONG:
+                printf("String is too long.\n");
+                continue;
             case PREPARE_SYNTAX_ERROR:
                 printf("Syntax error. Could not parse statement.\n");
                 continue;
