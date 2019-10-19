@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <fcntl.h>
-#include "constants.c"
+#include "insert.c"
 
 Pager* pagerOpen(const char* filename) {
     int fd = open(filename,  O_RDWR | O_CREAT, S_IWUSR | S_IRUSR);
@@ -12,7 +12,7 @@ Pager* pagerOpen(const char* filename) {
     }
 
     off_t fileLength = lseek(fd, 0, SEEK_END);
-    Pager* pager = malloc(sizeof(Pager));
+    Pager* pager = (Pager*) malloc(sizeof(Pager));
     pager -> fileDescriptor = fd;
     pager -> fileLength = fileLength;
 
@@ -31,7 +31,7 @@ void* getPage(Pager* pager, uint32_t pageNum) {
 
     if (pager -> pages[pageNum] == NULL) {
         // Cache miss. Allocate memory and load from file.
-        void *page = malloc(PAGE_SIZE);
+        void* page = malloc(PAGE_SIZE);
         uint32_t numPages = pager->fileLength / PAGE_SIZE;
 
         // We might save a partial page at the end of the file

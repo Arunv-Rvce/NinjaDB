@@ -59,7 +59,7 @@ typedef struct {
 
 typedef struct {
     uint32_t numRows;
-    Pager* pager
+    Pager* pager;
 } Table;
 
 

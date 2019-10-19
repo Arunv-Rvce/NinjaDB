@@ -1,4 +1,3 @@
-#include "constants.c"
 #include "fileOperations.c"
 
 void pagerFlush(Pager* pager, uint32_t pageNum, uint32_t size) {
@@ -24,6 +23,12 @@ void pagerFlush(Pager* pager, uint32_t pageNum, uint32_t size) {
 Table* openDB(const char* filename) {
     Pager* pager = pagerOpen(filename);
     uint32_t num_rows = pager -> fileLength / ROW_SIZE;
+
+    Table* table = (Table*) malloc(sizeof(Table));
+    table -> pager = pager;
+    table -> numRows = num_rows;
+
+    return table;
 }
 
 void closeDB(Table* table) {

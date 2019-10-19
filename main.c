@@ -2,13 +2,6 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <string.h>
-#include <bits/fcntl-linux.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <errno.h>
-#include "fileOperations.c"
-#include "insert.c"
-#include "constants.c"
 #include "db.c"
 
 InputBuffer* createInputBuffer() {
@@ -41,7 +34,7 @@ void deserializeRow(void* source, Row* destination) {
 
 void* rowSlot(Table* table, uint32_t rowNum) {
     uint32_t pageNum = rowNum / ROWS_PER_PAGE;
-    void* page = getPage(table -> pager, pageNum);
+    void *page = getPage(table -> pager, pageNum);
 
     uint32_t rowOffset = rowNum % ROWS_PER_PAGE;
     uint32_t byteOffset = rowOffset * ROW_SIZE;
@@ -73,7 +66,7 @@ MetaCommandResult createMetaCommand(InputBuffer* inputBuffer, Table* table) {
 
 PrepareResult prepareStatement(InputBuffer* inputBuffer, Statement* statement) {
     if (strncmp(inputBuffer -> buffer, "insert", 6) == 0) {
-        return prepare_insert(inputBuffer, statement);
+        return prepareInsert(inputBuffer, statement);
     }
     if (strncmp(inputBuffer -> buffer, "select", 6) == 0) {
         statement -> type = STATEMENT_SELECT;

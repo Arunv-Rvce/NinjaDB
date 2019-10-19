@@ -3,7 +3,7 @@
 #include <string.h>
 #include "constants.c"
 
-PrepareResult prepare_insert(InputBuffer* inputBuffer, Statement* statement) {
+PrepareResult prepareInsert(InputBuffer* inputBuffer, Statement* statement) {
     statement->type = STATEMENT_INSERT;
 
     char* keyword = strtok(inputBuffer->buffer, " ");
