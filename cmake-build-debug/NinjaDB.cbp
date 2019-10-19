@@ -81,6 +81,15 @@
 		<Unit filename="/home/arun/CLionProjects/NinjaDB/constants.c">
 			<Option target="NinjaDB"/>
 		</Unit>
+		<Unit filename="/home/arun/CLionProjects/NinjaDB/db.c">
+			<Option target="NinjaDB"/>
+		</Unit>
+		<Unit filename="/home/arun/CLionProjects/NinjaDB/fileOperations.c">
+			<Option target="NinjaDB"/>
+		</Unit>
+		<Unit filename="/home/arun/CLionProjects/NinjaDB/insert.c">
+			<Option target="NinjaDB"/>
+		</Unit>
 		<Unit filename="/home/arun/CLionProjects/NinjaDB/main.c">
 			<Option target="NinjaDB"/>
 		</Unit>

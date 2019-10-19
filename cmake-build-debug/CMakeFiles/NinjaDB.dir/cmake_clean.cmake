@@ -1,5 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/NinjaDB.dir/constants.c.o"
+  "CMakeFiles/NinjaDB.dir/db.c.o"
+  "CMakeFiles/NinjaDB.dir/fileOperations.c.o"
+  "CMakeFiles/NinjaDB.dir/insert.c.o"
   "CMakeFiles/NinjaDB.dir/main.c.o"
   "NinjaDB"
   "NinjaDB.pdb"

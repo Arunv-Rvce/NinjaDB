@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <string.h>
-#include "constants.c"
+#include "db.c"
 
 InputBuffer* createInputBuffer() {
     InputBuffer* inputBuffer = (InputBuffer*) malloc(sizeof(InputBuffer));
@@ -10,11 +10,6 @@ InputBuffer* createInputBuffer() {
     inputBuffer -> bufferLength = 0;
     inputBuffer -> inputLength = 0;
     return inputBuffer;
-}
-
-void closeInputBuffer(InputBuffer* inputBuffer) {
-    free(inputBuffer -> buffer);
-    free(inputBuffer);
 }
 
 void printPrompt() {
@@ -39,32 +34,11 @@ void deserializeRow(void* source, Row* destination) {
 
 void* rowSlot(Table* table, uint32_t rowNum) {
     uint32_t pageNum = rowNum / ROWS_PER_PAGE;
-    void* page = table -> pages[pageNum];
-
-    if (page == NULL) {
-        // Allocate memory only when we try to access page
-        page = table -> pages[pageNum] = malloc(PAGE_SIZE);
-    }
+    void *page = getPage(table -> pager, pageNum);
 
     uint32_t rowOffset = rowNum % ROWS_PER_PAGE;
     uint32_t byteOffset = rowOffset * ROW_SIZE;
     return page + byteOffset;
-}
-
-Table* getNewTable() {
-    Table* table = (Table*) malloc(sizeof(Table));
-    table ->numRows = 0;
-    for (uint32_t i = 0; i < TABLE_MAX_PAGES; i++) {
-        table -> pages[i] = NULL;
-    }
-    return table;
-}
-
-void freeTable(Table* table) {
-    for (int i = 0; table -> pages[i]; i++) {
-        free(table -> pages[i]);
-    }
-    free(table);
 }
 
 void readInput(InputBuffer* inputBuffer) {
@@ -81,21 +55,18 @@ void readInput(InputBuffer* inputBuffer) {
 
 MetaCommandResult createMetaCommand(InputBuffer* inputBuffer, Table* table) {
     if (strcmp(inputBuffer -> buffer, ".exit") == 0) {
-        closeInputBuffer(inputBuffer);
-        freeTable(table);
+        closeDB(table);
         exit(EXIT_SUCCESS);
     } else {
         return META_COMMAND_UNRECOGNIZED;
     }
 }
 
+
+
 PrepareResult prepareStatement(InputBuffer* inputBuffer, Statement* statement) {
     if (strncmp(inputBuffer -> buffer, "insert", 6) == 0) {
-        statement -> type = STATEMENT_INSERT;
-        int argsAssigned = sscanf(inputBuffer -> buffer, "insert %d %s %s", &(statement->  rowToInsert.id), statement -> rowToInsert.username, statement -> rowToInsert.email);
-        if (argsAssigned < 3)
-            return PREPARE_SYNTAX_ERROR;
-        return PREPARE_SUCCESS;
+        return prepareInsert(inputBuffer, statement);
     }
     if (strncmp(inputBuffer -> buffer, "select", 6) == 0) {
         statement -> type = STATEMENT_SELECT;
@@ -135,7 +106,13 @@ ExecuteResult executeStatement(Statement *statement, Table* table) {
 }
 
 int main(int argc, char* argv[]) {
-    Table* table = getNewTable();
+    if (argc < 2) {
+        printf("Must supply a database filename.\n");
+        exit(EXIT_FAILURE);
+    }
+    char* filename = argv[1];
+    Table* table = openDB(filename);
+
     InputBuffer* inputBuffer = createInputBuffer();
     for (;;) {
         printPrompt();
@@ -155,6 +132,12 @@ int main(int argc, char* argv[]) {
         switch (prepareStatement(inputBuffer, &statement)) {
             case PREPARE_SUCCESS:
                 break;
+            case PREPARE_NEGATIVE_ID:
+                printf("ID must be positive.\n");
+                continue;
+            case PREPARE_STRING_TOO_LONG:
+                printf("String is too long.\n");
+                continue;
             case PREPARE_SYNTAX_ERROR:
                 printf("Syntax error. Could not parse statement.\n");
                 continue;

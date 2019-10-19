@@ -18,7 +18,9 @@ typedef enum {
 typedef enum {
     PREPARE_SUCCESS,
     PREPARE_SYNTAX_ERROR,
-    PREPARE_UNRECOGNIZED_STATEMENT
+    PREPARE_UNRECOGNIZED_STATEMENT,
+    PREPARE_STRING_TOO_LONG,
+    PREPARE_NEGATIVE_ID
 } PrepareResult;
 
 typedef enum {
@@ -50,9 +52,16 @@ typedef struct {
 } Statement;
 
 typedef struct {
-    uint32_t numRows;
+    int fileDescriptor;
+    uint32_t fileLength;
     void* pages[TABLE_MAX_PAGES];
+} Pager;
+
+typedef struct {
+    uint32_t numRows;
+    Pager* pager;
 } Table;
+
 
 const uint32_t ID_SIZE = sizeOfAttribute(Row, id);
 const uint32_t USERNAME_SIZE = sizeOfAttribute(Row, username);
