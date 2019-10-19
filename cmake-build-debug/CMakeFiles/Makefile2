@@ -74,12 +74,12 @@ preinstall:
 CMakeFiles/NinjaDB.dir/all:
 	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/depend
 	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles --progress-num=1,2,3 "Built target NinjaDB"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target NinjaDB"
 .PHONY : CMakeFiles/NinjaDB.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/NinjaDB.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles 6
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/NinjaDB.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/NinjaDB.dir/rule

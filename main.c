@@ -5,7 +5,11 @@
 #include <bits/fcntl-linux.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <errno.h>
+#include "fileOperations.c"
+#include "insert.c"
 #include "constants.c"
+#include "db.c"
 
 InputBuffer* createInputBuffer() {
     InputBuffer* inputBuffer = (InputBuffer*) malloc(sizeof(InputBuffer));
@@ -13,11 +17,6 @@ InputBuffer* createInputBuffer() {
     inputBuffer -> bufferLength = 0;
     inputBuffer -> inputLength = 0;
     return inputBuffer;
-}
-
-void closeInputBuffer(InputBuffer* inputBuffer) {
-    free(inputBuffer -> buffer);
-    free(inputBuffer);
 }
 
 void printPrompt() {
@@ -49,37 +48,6 @@ void* rowSlot(Table* table, uint32_t rowNum) {
     return page + byteOffset;
 }
 
-Pager* pagerOpen(const char* filename) {
-    int fd = open(filename,  O_RDWR | O_CREAT, S_IWUSR | S_IRUSR);
-    if (fd == -1) {
-        printf("Unable to open file\n");
-        exit(EXIT_FAILURE);
-    }
-
-    off_t fileLength = lseek(fd, 0, SEEK_END);
-    Pager* pager = malloc(sizeof(Pager));
-    pager -> fileDescriptor = fd;
-    pager -> fileLength = fileLength;
-
-    for (uint32_t i = 0; i < TABLE_MAX_PAGES; i++) {
-        pager->pages[i] = NULL;
-    }
-
-    return pager;
-}
-
-Table* openDB(const char* filename) {
-    Pager* pager = pagerOpen(filename);
-    uint32_t num_rows = pager -> fileLength / ROW_SIZE;
-}
-
-void freeTable(Table* table) {
-    for (int i = 0; table -> pages[i]; i++) {
-        free(table -> pages[i]);
-    }
-    free(table);
-}
-
 void readInput(InputBuffer* inputBuffer) {
     ssize_t bytesRead = getline(&(inputBuffer -> buffer), &(inputBuffer -> bufferLength), stdin);
 
@@ -94,44 +62,14 @@ void readInput(InputBuffer* inputBuffer) {
 
 MetaCommandResult createMetaCommand(InputBuffer* inputBuffer, Table* table) {
     if (strcmp(inputBuffer -> buffer, ".exit") == 0) {
-        closeInputBuffer(inputBuffer);
-        freeTable(table);
+        closeDB(table);
         exit(EXIT_SUCCESS);
     } else {
         return META_COMMAND_UNRECOGNIZED;
     }
 }
 
-PrepareResult prepare_insert(InputBuffer* inputBuffer, Statement* statement) {
-    statement->type = STATEMENT_INSERT;
 
-    char* keyword = strtok(inputBuffer->buffer, " ");
-    char* idStr = strtok(NULL, " ");
-    char* username = strtok(NULL, " ");
-    char* email = strtok(NULL, " ");
-
-    if (idStr == NULL || username == NULL || email == NULL) {
-        return PREPARE_SYNTAX_ERROR;
-    }
-
-    int id = atoi(idStr);
-    if (id < 0) {
-        return PREPARE_NEGATIVE_ID;
-    }
-
-    if (strlen(username) > COLUMN_USERNAME_SIZE) {
-        return PREPARE_STRING_TOO_LONG;
-    }
-
-    if (strlen(username) > COLUMN_USERNAME_SIZE) {
-        return PREPARE_STRING_TOO_LONG;
-    }
-
-    statement->rowToInsert.id = id;
-    strcpy(statement->rowToInsert.username, username);
-    strcpy(statement->rowToInsert.email, email);
-    return PREPARE_SUCCESS;
-}
 
 PrepareResult prepareStatement(InputBuffer* inputBuffer, Statement* statement) {
     if (strncmp(inputBuffer -> buffer, "insert", 6) == 0) {
@@ -175,7 +113,13 @@ ExecuteResult executeStatement(Statement *statement, Table* table) {
 }
 
 int main(int argc, char* argv[]) {
-    Table* table = getNewTable();
+    if (argc < 2) {
+        printf("Must supply a database filename.\n");
+        exit(EXIT_FAILURE);
+    }
+    char* filename = argv[1];
+    Table* table = openDB(filename);
+
     InputBuffer* inputBuffer = createInputBuffer();
     for (;;) {
         printPrompt();

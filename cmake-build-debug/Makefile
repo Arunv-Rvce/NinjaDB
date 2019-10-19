@@ -150,6 +150,87 @@ constants.c.s:
 	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/constants.c.s
 .PHONY : constants.c.s
 
+db.o: db.c.o
+
+.PHONY : db.o
+
+# target to build an object file
+db.c.o:
+	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/db.c.o
+.PHONY : db.c.o
+
+db.i: db.c.i
+
+.PHONY : db.i
+
+# target to preprocess a source file
+db.c.i:
+	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/db.c.i
+.PHONY : db.c.i
+
+db.s: db.c.s
+
+.PHONY : db.s
+
+# target to generate assembly for a file
+db.c.s:
+	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/db.c.s
+.PHONY : db.c.s
+
+fileOperations.o: fileOperations.c.o
+
+.PHONY : fileOperations.o
+
+# target to build an object file
+fileOperations.c.o:
+	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/fileOperations.c.o
+.PHONY : fileOperations.c.o
+
+fileOperations.i: fileOperations.c.i
+
+.PHONY : fileOperations.i
+
+# target to preprocess a source file
+fileOperations.c.i:
+	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/fileOperations.c.i
+.PHONY : fileOperations.c.i
+
+fileOperations.s: fileOperations.c.s
+
+.PHONY : fileOperations.s
+
+# target to generate assembly for a file
+fileOperations.c.s:
+	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/fileOperations.c.s
+.PHONY : fileOperations.c.s
+
+insert.o: insert.c.o
+
+.PHONY : insert.o
+
+# target to build an object file
+insert.c.o:
+	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/insert.c.o
+.PHONY : insert.c.o
+
+insert.i: insert.c.i
+
+.PHONY : insert.i
+
+# target to preprocess a source file
+insert.c.i:
+	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/insert.c.i
+.PHONY : insert.c.i
+
+insert.s: insert.c.s
+
+.PHONY : insert.s
+
+# target to generate assembly for a file
+insert.c.s:
+	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/insert.c.s
+.PHONY : insert.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -189,6 +270,15 @@ help:
 	@echo "... constants.o"
 	@echo "... constants.i"
 	@echo "... constants.s"
+	@echo "... db.o"
+	@echo "... db.i"
+	@echo "... db.s"
+	@echo "... fileOperations.o"
+	@echo "... fileOperations.i"
+	@echo "... fileOperations.s"
+	@echo "... insert.o"
+	@echo "... insert.i"
+	@echo "... insert.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
