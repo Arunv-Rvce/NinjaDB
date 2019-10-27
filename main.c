@@ -32,13 +32,35 @@ void deserializeRow(void* source, Row* destination) {
     memcpy(&(destination -> email), source + EMAIL_OFFSET, EMAIL_SIZE);
 }
 
-void* rowSlot(Table* table, uint32_t rowNum) {
-    uint32_t pageNum = rowNum / ROWS_PER_PAGE;
-    void *page = getPage(table -> pager, pageNum);
+Cursor* tableStart(Table* table) {
+    Cursor* cursor = (Cursor*) malloc(sizeof(Cursor));
+    cursor -> table = table;
+    cursor -> rowNum = 0;
+    cursor->endOfTable = (table -> numRows == 0);
+    return cursor;
+}
 
-    uint32_t rowOffset = rowNum % ROWS_PER_PAGE;
+Cursor* tableEnd(Table* table) {
+    Cursor* cursor = (Cursor*) malloc(sizeof(Cursor));
+    cursor -> table = table;
+    cursor -> rowNum = table -> numRows;
+    cursor->endOfTable = true;
+    return cursor;
+}
+
+void* cursorValue(Cursor* cursor) {
+    uint32_t pageNum = cursor -> rowNum / ROWS_PER_PAGE;
+    void* page = getPage(cursor-> table ->pager, pageNum);
+
+    uint32_t rowOffset = cursor -> rowNum % ROWS_PER_PAGE;
     uint32_t byteOffset = rowOffset * ROW_SIZE;
     return page + byteOffset;
+}
+
+void cursorAdvance(Cursor* cursor) {
+    cursor -> rowNum += 1;
+    if (cursor -> rowNum >= cursor -> table -> numRows)
+        cursor -> endOfTable = true;
 }
 
 void readInput(InputBuffer* inputBuffer) {
@@ -81,18 +103,23 @@ ExecuteResult executeInsert(Statement* statement, Table* table) {
         return EXECUTE_TABLE_FULL;
 
     Row* rowToInsert = &(statement -> rowToInsert);
+    Cursor* cursor = tableEnd(table);
 
-    serializeRow(rowToInsert, rowSlot(table, table -> numRows));
+    serializeRow(rowToInsert, cursorValue(cursor));
     table -> numRows += 1;
+    free(cursor);
     return EXECUTE_SUCCESS;
 }
 
 ExecuteResult executeSelect(Statement* statement, Table* table) {
+    Cursor* cursor = tableStart(table);
     Row row;
-    for (uint32_t i = 0; i < table -> numRows; i++) {
-        deserializeRow(rowSlot(table, i), &row);
+    while (!(cursor -> endOfTable)) {
+        deserializeRow(cursorValue(cursor), &row);
         printRow(&row);
+        cursorAdvance(cursor);
     }
+    free(cursor);
     return EXECUTE_SUCCESS;
 }
 
