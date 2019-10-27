@@ -70,22 +70,9 @@ CMakeFiles/NinjaDB.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/NinjaDB.dir/main.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/arun/CLionProjects/NinjaDB/main.c -o CMakeFiles/NinjaDB.dir/main.c.s
 
-CMakeFiles/NinjaDB.dir/constants.c.o: CMakeFiles/NinjaDB.dir/flags.make
-CMakeFiles/NinjaDB.dir/constants.c.o: ../constants.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/NinjaDB.dir/constants.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/NinjaDB.dir/constants.c.o   -c /home/arun/CLionProjects/NinjaDB/constants.c
-
-CMakeFiles/NinjaDB.dir/constants.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/NinjaDB.dir/constants.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/arun/CLionProjects/NinjaDB/constants.c > CMakeFiles/NinjaDB.dir/constants.c.i
-
-CMakeFiles/NinjaDB.dir/constants.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/NinjaDB.dir/constants.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/arun/CLionProjects/NinjaDB/constants.c -o CMakeFiles/NinjaDB.dir/constants.c.s
-
 CMakeFiles/NinjaDB.dir/insert.c.o: CMakeFiles/NinjaDB.dir/flags.make
 CMakeFiles/NinjaDB.dir/insert.c.o: ../insert.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/NinjaDB.dir/insert.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/NinjaDB.dir/insert.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/NinjaDB.dir/insert.c.o   -c /home/arun/CLionProjects/NinjaDB/insert.c
 
 CMakeFiles/NinjaDB.dir/insert.c.i: cmake_force
@@ -98,7 +85,7 @@ CMakeFiles/NinjaDB.dir/insert.c.s: cmake_force
 
 CMakeFiles/NinjaDB.dir/fileOperations.c.o: CMakeFiles/NinjaDB.dir/flags.make
 CMakeFiles/NinjaDB.dir/fileOperations.c.o: ../fileOperations.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/NinjaDB.dir/fileOperations.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/NinjaDB.dir/fileOperations.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/NinjaDB.dir/fileOperations.c.o   -c /home/arun/CLionProjects/NinjaDB/fileOperations.c
 
 CMakeFiles/NinjaDB.dir/fileOperations.c.i: cmake_force
@@ -111,7 +98,7 @@ CMakeFiles/NinjaDB.dir/fileOperations.c.s: cmake_force
 
 CMakeFiles/NinjaDB.dir/db.c.o: CMakeFiles/NinjaDB.dir/flags.make
 CMakeFiles/NinjaDB.dir/db.c.o: ../db.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/NinjaDB.dir/db.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/NinjaDB.dir/db.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/NinjaDB.dir/db.c.o   -c /home/arun/CLionProjects/NinjaDB/db.c
 
 CMakeFiles/NinjaDB.dir/db.c.i: cmake_force
@@ -125,7 +112,6 @@ CMakeFiles/NinjaDB.dir/db.c.s: cmake_force
 # Object files for target NinjaDB
 NinjaDB_OBJECTS = \
 "CMakeFiles/NinjaDB.dir/main.c.o" \
-"CMakeFiles/NinjaDB.dir/constants.c.o" \
 "CMakeFiles/NinjaDB.dir/insert.c.o" \
 "CMakeFiles/NinjaDB.dir/fileOperations.c.o" \
 "CMakeFiles/NinjaDB.dir/db.c.o"
@@ -134,13 +120,12 @@ NinjaDB_OBJECTS = \
 NinjaDB_EXTERNAL_OBJECTS =
 
 NinjaDB: CMakeFiles/NinjaDB.dir/main.c.o
-NinjaDB: CMakeFiles/NinjaDB.dir/constants.c.o
 NinjaDB: CMakeFiles/NinjaDB.dir/insert.c.o
 NinjaDB: CMakeFiles/NinjaDB.dir/fileOperations.c.o
 NinjaDB: CMakeFiles/NinjaDB.dir/db.c.o
 NinjaDB: CMakeFiles/NinjaDB.dir/build.make
 NinjaDB: CMakeFiles/NinjaDB.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable NinjaDB"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable NinjaDB"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/NinjaDB.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

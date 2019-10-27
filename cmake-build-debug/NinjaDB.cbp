@@ -78,7 +78,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/arun/CLionProjects/NinjaDB/constants.c">
+		<Unit filename="/home/arun/CLionProjects/NinjaDB/constants.h">
 			<Option target="NinjaDB"/>
 		</Unit>
 		<Unit filename="/home/arun/CLionProjects/NinjaDB/db.c">

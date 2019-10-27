@@ -4,7 +4,6 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/arun/CLionProjects/NinjaDB/constants.c" "/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles/NinjaDB.dir/constants.c.o"
   "/home/arun/CLionProjects/NinjaDB/db.c" "/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles/NinjaDB.dir/db.c.o"
   "/home/arun/CLionProjects/NinjaDB/fileOperations.c" "/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles/NinjaDB.dir/fileOperations.c.o"
   "/home/arun/CLionProjects/NinjaDB/insert.c" "/home/arun/CLionProjects/NinjaDB/cmake-build-debug/CMakeFiles/NinjaDB.dir/insert.c.o"
