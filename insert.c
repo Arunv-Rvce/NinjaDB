@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "constants.c"
+#include "constants.h"
 
 PrepareResult prepareInsert(InputBuffer* inputBuffer, Statement* statement) {
     statement->type = STATEMENT_INSERT;

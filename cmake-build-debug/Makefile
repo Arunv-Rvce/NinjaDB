@@ -123,33 +123,6 @@ NinjaDB/fast:
 	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/build
 .PHONY : NinjaDB/fast
 
-constants.o: constants.c.o
-
-.PHONY : constants.o
-
-# target to build an object file
-constants.c.o:
-	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/constants.c.o
-.PHONY : constants.c.o
-
-constants.i: constants.c.i
-
-.PHONY : constants.i
-
-# target to preprocess a source file
-constants.c.i:
-	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/constants.c.i
-.PHONY : constants.c.i
-
-constants.s: constants.c.s
-
-.PHONY : constants.s
-
-# target to generate assembly for a file
-constants.c.s:
-	$(MAKE) -f CMakeFiles/NinjaDB.dir/build.make CMakeFiles/NinjaDB.dir/constants.c.s
-.PHONY : constants.c.s
-
 db.o: db.c.o
 
 .PHONY : db.o
@@ -267,9 +240,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... NinjaDB"
 	@echo "... edit_cache"
-	@echo "... constants.o"
-	@echo "... constants.i"
-	@echo "... constants.s"
 	@echo "... db.o"
 	@echo "... db.i"
 	@echo "... db.s"
