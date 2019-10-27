@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 #define COLUMN_USERNAME_SIZE 32
 #define COLUMN_EMAIL_SIZE 255
@@ -58,6 +59,12 @@ typedef struct {
     uint32_t numRows;
     Pager* pager;
 } Table;
+
+typedef struct {
+    Table *table;
+    uint32_t rowNum;
+    bool endOfTable;
+} Cursor;
 
 
 const uint32_t ID_SIZE = sizeOfAttribute(Row, id);
