@@ -15,6 +15,12 @@ Pager* pagerOpen(const char* filename) {
     Pager* pager = (Pager*) malloc(sizeof(Pager));
     pager -> fileDescriptor = fd;
     pager -> fileLength = fileLength;
+    pager-> numPages = (fileLength / PAGE_SIZE);
+
+    if (fileLength % PAGE_SIZE != 0) {
+        printf("Db file is not a whole number of pages. Corrupt file.\n");
+        exit(EXIT_FAILURE);
+    }
 
     for (uint32_t i = 0; i < TABLE_MAX_PAGES; i++) {
         pager->pages[i] = NULL;
@@ -48,6 +54,9 @@ void* getPage(Pager* pager, uint32_t pageNum) {
             }
         }
         pager -> pages[pageNum] = page;
+        if (pageNum >= pager -> numPages) {
+            pager -> numPages = pageNum + 1;
+        }
     }
     return pager -> pages[pageNum];
 }
