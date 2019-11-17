@@ -33,7 +33,7 @@ void deserializeRow(void* source, Row* destination) {
 }
 
 uint32_t* leafNodeNumCells(void* node) {
-    return node + LEAF_NODE_NUM_CELLS_OFFSET;
+    return (uint32_t*) (node + LEAF_NODE_NUM_CELLS_OFFSET);
 }
 
 void* leafNodeCell(void* node, uint32_t cell_num) {
@@ -41,7 +41,7 @@ void* leafNodeCell(void* node, uint32_t cell_num) {
 }
 
 uint32_t* leafNodeKey(void* node, uint32_t cell_num) {
-    return leafNodeCell(node, cell_num);
+    return (uint32_t*) leafNodeCell(node, cell_num);
 }
 
 void* leafNodeValue(void* node, uint32_t cell_num) {
@@ -73,7 +73,7 @@ Cursor* tableEnd(Table* table) {
 }
 
 void* cursorValue(Cursor* cursor) {
-    uint32_t page_num = cursor -> pageNum;
+    uint32_t pageNum = cursor -> pageNum;
     void* page = getPage(cursor -> table -> pager, pageNum);
     return leafNodeValue(page, cursor -> cellNum);
 }

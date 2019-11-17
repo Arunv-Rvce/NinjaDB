@@ -1,7 +1,7 @@
 #include "fileOperations.c"
 
 uint32_t* leafNodeNCells(void* node) {
-    return node + LEAF_NODE_NUM_CELLS_OFFSET;
+    return (uint32_t*) (node + LEAF_NODE_NUM_CELLS_OFFSET);
 }
 
 void initializeLeafNode(void* node) { *leafNodeNCells(node) = 0; }
